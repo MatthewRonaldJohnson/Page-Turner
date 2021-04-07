@@ -20,4 +20,4 @@ Emily: Database models
 ![page turner](assets/home.jpg)
 
 ## Database Visualization  
-![image of database](assets\img\schema-visualization.PNG)
+![image of database](assets/schema-visualization.PNG)
