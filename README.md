@@ -18,3 +18,6 @@ Emily: Database models
 
 ## Wireframes  
 ![page turner](assets/home.jpg)
+
+## Database Visualization  
+![image of database](assets\img\schema-visualization.PNG)
