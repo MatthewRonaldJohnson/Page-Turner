@@ -11,7 +11,7 @@ This application will be written in Javascript, HTML, and CSS and make use of No
 
 ## Breakdown of Roles
 All team members will collaborate on a wild variety of assignments but the primary roles will be:  
-Kevin: Frontend deisgn  
+Kevin: Frontend design 
 Matthew: Backend architecture  
 Emily: Database models 
 
