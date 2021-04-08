@@ -7,8 +7,23 @@ const helpers = require('./utils/helpers'); //brings in our helper functions for
 const routes = require('./controllers'); //pull in routes from controller dir
 const sequelize = require('./config/connection'); //pull in sequelize connection from config
 
+const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
 const app = express(); //init express into app
 const PORT = process.env.PORT || 3001; //set up PORT, reverts to 3001 if not in .env file 
+
+const sess = {
+    secret: 'Super secret secret',
+    cookie: {},
+    resave: false,
+    saveUninitialized: true,
+    store: new SequelizeStore({
+        db: sequelize,
+    }),
+};
+
+app.use(session(sess));
 
 const hbs = exphbs.create({helpers});
 app.engine('handlebars', hbs.engine);
@@ -24,13 +39,3 @@ app.use(routes); //this will send all the http request to the controllers dir wh
 sequelize.sync({ force: false }).then(() => { //establish sequelize connection to db
     app.listen(PORT, () => console.log('App listening on PORT: ' + PORT))
 }); //starts app listening for http request at specified port
-
-
-
-
-
-
-
-
-
-//Currently not including session middleware
