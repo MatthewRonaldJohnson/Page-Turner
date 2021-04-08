@@ -40,6 +40,6 @@ const booksData = [
   },
 ];
 
-const seedsBooks = () => Books.bulkCreate(booksData);
+const seedBook = () => Books.bulkCreate(booksData);
 
-module.exports = seedsBooks
+module.exports = seedBook

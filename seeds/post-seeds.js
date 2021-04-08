@@ -54,6 +54,6 @@ const postData = [
 
 ]
 
-    const seedsPost = () => Books.bulkCreate(postData);
+    const seedPost = () => Post.bulkCreate(postData);
 
-    module.exports = seedsPost
+    module.exports = seedPost
