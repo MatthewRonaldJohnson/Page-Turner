@@ -9,6 +9,9 @@ Post.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    rating: {
+      type: DataTypes.Boolean,
+    }, 
     body: DataTypes.STRING,
   },
 
