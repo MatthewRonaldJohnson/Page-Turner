@@ -12,7 +12,7 @@ Post.init(
     rating: {
       type: DataTypes.BOOLEAN,
     }, 
-    body: DataTypes.STRING,
+    body: DataTypes.TEXT,
   },
 
   {
