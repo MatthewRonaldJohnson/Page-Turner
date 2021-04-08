@@ -3,7 +3,7 @@ const Post = require("./Post");
 const Comment = require("./Comment");
 const Books = require("./Books");
 
-User.hasMany(Post, Comment, {
+User.hasMany(Post,{
   foreignKey: "user_id",
   onDelete: "CASCADE",
 });
@@ -13,20 +13,29 @@ Post.belongsTo(User, {
   onDelete: "CASCADE",
 });
 
-Post.belongsTo(User, {
+User.hasMany(Comment,{
   foreignKey: "user_id",
-});
-
-Comment.hasMany(User, {
-  foreignKey: "user_id",
+  onDelete: "CASCADE",
 });
 
 Comment.belongsTo(User, {
   foreignKey: "user_id",
   onDelete: "CASCADE",
 });
-Books.hasMany(User, Comment, {
-  foreignKey: "user_id",
+
+Books.hasMany(Post,{
+  foreignKey: "book_isbn",
 });
+
+Post.belongsTo(Books, {
+  foreignKey: "book_isbn", 
+}); 
+
+Post.hasMany(Comment, {
+  foreignkey: "post_id",
+}); 
+Comment.belongsTo(Post, {
+  foreignKey: "post_id",
+}); 
 
 model.exports = { User, Post, Comment, Books };

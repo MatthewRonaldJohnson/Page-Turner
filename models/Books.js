@@ -1,15 +1,14 @@
-const { Model, DataTypes } = require("sequelize");
+const { Model } = require("sequelize");
 const sequelize = require("../config/connection.js");
 
 class Books extends Model {}
 
 Books.init(
   {
-    id: {
+    isbn: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true,
     },
     title: {
       type: DataTypes.STRING,
