@@ -1,4 +1,4 @@
-const { Model} = require("sequelize");
+const { Model, DataTypes} = require("sequelize");
 const sequelize = require("../config/connection.js");
 
 class Post extends Model {}
@@ -10,7 +10,7 @@ Post.init(
       allowNull: false,
     },
     rating: {
-      type: DataTypes.Boolean,
+      type: DataTypes.BOOLEAN,
     }, 
     body: DataTypes.STRING,
   },
@@ -23,4 +23,4 @@ Post.init(
   }
 );
 
-model.exports = Post;
+module.exports = Post;
