@@ -21,9 +21,9 @@ const booksData = [
     author: "Diane Wilson",
   },
   {
-    isbn: 9780679645122,
-    title: "Perfect",
-    cover_img_url: "http://books.google.com/books/content?id=jSgUAAAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+    isbn: 9780812996715,
+    title: "Miss Benson's Beetle",
+    cover_img_url: "http://books.google.com/books/content?id=qLrWDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
     author: "Rachel Joyce",
   },
   {
