@@ -1,42 +1,5 @@
 <div class="container">
-        <div class="row h-25">
-            <div class="col-3"> 
-                <img src="http://books.google.com/books/content?id=hFfhrCWiLSMC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api" alt="book">
-            </div>
-            <div class="d-flex flex-column justify-content-center align-items-center col-9">
-                <h4>   
-                     Post title
-                </h4>
-
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore culpa quae repudiandae iure nobis esse ipsa cum maiores. Doloremque iure vel nostrum nemo libero fugit labore aspernatur eligendi, ipsa illum!</p>
-                <p>- post Author</p>
-             </div>
-        </div>
-        <div class="row h-25">
-           
-            <div class="d-flex flex-column justify-content-center align-items-center col-9">
-                <h4>   
-                     Post title
-                </h4>
-
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore culpa quae repudiandae iure nobis esse ipsa cum maiores. Doloremque iure vel nostrum nemo libero fugit labore aspernatur eligendi, ipsa illum!</p>
-                <p>- post Author</p>
-             </div>
-             <div class="col-3"> 
-                <img src="http://books.google.com/books/content?id=hFfhrCWiLSMC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api" alt="book">
-            </div>
-        </div>
-        <div class="row h-25">
-            <div class="col-3"> 
-                <img src="http://books.google.com/books/content?id=hFfhrCWiLSMC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api" alt="book">
-            </div>
-            <div class="d-flex flex-column justify-content-center align-items-center col-9">
-                <h4>   
-                     Post title
-                </h4>
-
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore culpa quae repudiandae iure nobis esse ipsa cum maiores. Doloremque iure vel nostrum nemo libero fugit labore aspernatur eligendi, ipsa illum!</p>
-                <p>- post Author</p>
-             </div>
-        </div>
-    </div>
+    {{#each postData as |post|}}
+        {{> postCard}}
+    {{/each}}
+</div>

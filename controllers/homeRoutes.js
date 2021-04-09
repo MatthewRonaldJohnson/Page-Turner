@@ -19,8 +19,16 @@ router.get('/', async (req, res) => {
     })
     //serialize it
     const postData = rawPostData.map(post => post.get())
+    for (let i = 0; i < postData.length; i++) {
+        const user = JSON.parse(JSON.stringify(postData[i].User));
+        postData[i].userName = user.username;
+        const book = JSON.parse(JSON.stringify(postData[i].book));
+        postData[i].cover_img_url = book.cover_img_url;
+        postData[i].book_title = book.title;
+    }
     //render homepage
-    res.render('homepage', postData)
+    res.render('homepage', { postData })
+    //res.json(postData)
 })
 
 // /members, shows member cards 
@@ -33,11 +41,11 @@ router.get('/members', async (req, res) => {
     const userData = rawUserData.map(user => user.get())
     //render members page
     res.render('members', userData)
+    //res.json(userData)
 })
 
 // /search/:search-term, search bar, returns list of results frm google books api, and checks if we have reviews for those books
 router.get('/search/:searchTerm', async (req, res) => {
-    console.log('------------------------HIT-------------------')
     const url = `https://www.googleapis.com/books/v1/volumes?q=${req.params.searchTerm}`
     //search google books api
     const response = await fetch(url);
@@ -63,46 +71,54 @@ router.get('/search/:searchTerm', async (req, res) => {
 
 router.get('/post/:id', async (req, res) => {
     try {//find the specificed post and all associated data
-    const rawPost = await Post.findByPk(req.params.id, {
-        include: [{
-            model: User,
-            attributes: ['id', 'username']
-        },
-        { model: Books },
-        {
-            model: Comment,
-            include: [{ model: User, attributes: ['id', 'username'] }],
-        },
-        ]
-    });
-    //serialize that data
-    const postData = rawPost.get();
-    //render page
-    res.render('single-post', postData);
-    //res.json(postData)
-} catch(error){
-    res.redirect('/404')
-}
+        const rawPost = await Post.findByPk(req.params.id, {
+            include: [{
+                model: User,
+                attributes: ['id', 'username']
+            },
+            { model: Books },
+            {
+                model: Comment,
+                include: [{ model: User, attributes: ['id', 'username'] }],
+            },
+            ]
+        });
+        //serialize that data
+        const postData = rawPost.get();
+        const user = JSON.parse(JSON.stringify(postData.User));
+        postData.userName = user.username;
+        const book = JSON.parse(JSON.stringify(postData.book));
+        postData.cover_img_url = book.cover_img_url;
+        postData.book_title = book.title;
+        const commentArr = postData.comments.map(comment => JSON.parse(JSON.stringify(comment)))
+        postData.commentArr = commentArr;
+        //render page
+        res.render('single-post', postData);
+        //res.json(postData)
+    } catch (error) {
+        console.log(error)
+        res.redirect('/404')
+    }
 })
 
 router.get('/book/:isbn', async (req, res) => {
     try {
         //find book, any reviews for it (and their authors)
-    const rawBook = await Books.findByPk(req.params.isbn, {
-        include:
-            [{
-                model: Post,
-                include: [{
-                    model: User,
-                    attributes: ['id', 'username']
+        const rawBook = await Books.findByPk(req.params.isbn, {
+            include:
+                [{
+                    model: Post,
+                    include: [{
+                        model: User,
+                        attributes: ['id', 'username']
+                    }]
                 }]
-            }]
-    })
-    //serialize data
-    const bookData = rawBook.get();
-    //render page
-    res.render('booksinDatabase', bookData)
-    //res.json(bookData)
+        })
+        //serialize data
+        const bookData = rawBook.get();
+        //render page
+        res.render('booksinDatabase', bookData)
+        //res.json(bookData)
     } catch (error) {
         res.redirect('/404')
     }
