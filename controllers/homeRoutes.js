@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const { Post, User, Comment, Books } = require('../models');
+const sequelize = require('../config/connection');
+
 
 // / : homepage, shows 10 most recent reviews
 router.get('/', async (req, res) => {
@@ -87,4 +89,4 @@ router.get('/login', (req,res) => {
     res.render('login')
 })
 
-module.exports.router;
+module.exports = router;
