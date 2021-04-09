@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Post, User, Comment, Books } = require('../models');
 const sequelize = require('../config/connection');
+const fetch = require('node-fetch')
 
 
 // / : homepage, shows 10 most recent reviews
@@ -35,14 +36,27 @@ router.get('/members', async (req, res) => {
 })
 
 // /search/:search-term, search bar, returns list of results frm google books api, and checks if we have reviews for those books
-router.get('/search/:search-term', async (req, res) => {
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${req.params.search - term}`
+router.get('/search/:searchTerm', async (req, res) => {
+    console.log('------------------------HIT-------------------')
+    const url = `https://www.googleapis.com/books/v1/volumes?q=${req.params.searchTerm}`
     //search google books api
-    const { items } = await fetch(url);
+    const response = await fetch(url);
+    const { items } = await response.json();
     //find books we have reviews for, filter out null results (aka books that don't have reviews in our database)
-    const rawDbBooks = items.map(async (book) => await Books.findByPk(book.volumeInfo.industryIdentifiers[0].identifier)).filter(data => data);
+
+    const isbnArr = [];
+    for (let i = 0; i < items.length; i++) {
+        const target = items[i].volumeInfo.industryIdentifiers.find(element => element.type === "ISBN_13");
+        isbnArr.push(target);
+    }
+    const goodIsbn = isbnArr.filter(data => data);
+    const rawDbBooks = [];
+    for (let i = 0; i < goodIsbn.length; i++) {
+        rawDbBooks.push(await Books.findByPk(goodIsbn[i].identifier))
+    }
+    const booksInDb = rawDbBooks.filter(data => data);
     //serialize data 
-    const books = rawDbBooks.map(book => book.get())
+    const books = booksInDb.map(book => book.get())
     //render search page
     res.render('search', books)
 })
@@ -77,7 +91,7 @@ router.get('/book/:isbn', async (req, res) => {
                     model: User,
                     attributes: ['id', 'username']
                 }]
-         }]
+            }]
     })
     //serialize data
     const bookData = rawBook.get();
@@ -85,7 +99,7 @@ router.get('/book/:isbn', async (req, res) => {
     res.render('book', bookData)
 })
 
-router.get('/login', (req,res) => {
+router.get('/login', (req, res) => {
     res.render('login')
 })
 
