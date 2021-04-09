@@ -78,7 +78,8 @@ router.get('/post/:id', async (req, res) => {
     //serialize that data
     const postData = rawPost.get();
     //render page
-    res.render('post', postData);
+    res.render('single-post', postData);
+    //res.json(postData)
 })
 
 router.get('/book/:isbn', async (req, res) => {
@@ -97,6 +98,7 @@ router.get('/book/:isbn', async (req, res) => {
     const bookData = rawBook.get();
     //render page
     res.render('book', bookData)
+    //res.json(bookData)
 })
 
 router.get('/login', (req, res) => {
