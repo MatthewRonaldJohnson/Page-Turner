@@ -58,11 +58,11 @@ router.get('/search/:searchTerm', async (req, res) => {
     //serialize data 
     const books = booksInDb.map(book => book.get())
     //render search page
-    res.render('search', books)
+    res.render('searchResults', books)
 })
 
 router.get('/post/:id', async (req, res) => {
-    //find the specificed post and all associated data
+    try {//find the specificed post and all associated data
     const rawPost = await Post.findByPk(req.params.id, {
         include: [{
             model: User,
@@ -80,10 +80,14 @@ router.get('/post/:id', async (req, res) => {
     //render page
     res.render('single-post', postData);
     //res.json(postData)
+} catch(error){
+    res.redirect('/404')
+}
 })
 
 router.get('/book/:isbn', async (req, res) => {
-    //find book, any reviews for it (and their authors)
+    try {
+        //find book, any reviews for it (and their authors)
     const rawBook = await Books.findByPk(req.params.isbn, {
         include:
             [{
@@ -97,12 +101,19 @@ router.get('/book/:isbn', async (req, res) => {
     //serialize data
     const bookData = rawBook.get();
     //render page
-    res.render('book', bookData)
+    res.render('booksinDatabase', bookData)
     //res.json(bookData)
+    } catch (error) {
+        res.redirect('/404')
+    }
 })
 
 router.get('/login', (req, res) => {
     res.render('login')
+})
+
+router.get('/signup', (req, res) => {
+    res.render('sign-up')
 })
 
 module.exports = router;
