@@ -34,13 +34,11 @@ router.get('/', async (req, res) => {
 // /members, shows member cards 
 router.get('/members', async (req, res) => {
     //get user data
-    const rawUserData = await User.findAll({
-        attributes: ['id', 'username']
-    })
+    const rawUserData = await User.findAll()
     //serialize it
     const userData = rawUserData.map(user => user.get())
     //render members page
-    res.render('members', userData)
+    res.render('members', {userData})
     //res.json(userData)
 })
 
