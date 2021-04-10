@@ -29,17 +29,16 @@ router.post('/login', async (req, res) => {
     try {
         const dbUserData = await User.findOne({
             where: {
-                user_name: req.body.userName,
+                username: req.body.userName,
             },
         });
-
         if (!dbUserData) {
             res
                 .status(400)
                 .json({ message: "Couldn't find user, check your Username or Sign Up" });
             return;
         }
-
+        console.log(req.body)
         const validPassword = await dbUserData.checkPassword(req.body.password);
 
         if (!validPassword) {
@@ -67,7 +66,7 @@ router.post('/login', async (req, res) => {
 router.post('/logout', (req, res) => {
     if (req.session.userId) {
         req.session.destroy(() => {
-            res.status(204).end();
+            res.status(204).redirect('/');
         });
     } else {
         res.status(404).end();
