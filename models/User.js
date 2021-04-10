@@ -29,7 +29,7 @@ User.init(
     profile_pic: {
       type: DataTypes.STRING,
       defaultValue: "https://res.cloudinary.com/dh5xladkz/image/upload/v1618078037/Page-Turner/default-profile_bfibgv.png",
-      allowNull: false,
+      
     },
   },
   {
