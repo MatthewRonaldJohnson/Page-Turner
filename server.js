@@ -36,6 +36,8 @@ app.use(express.static(path.join(__dirname, 'public'))); //this set up static pa
 
 app.use(routes); //this will send all the http request to the controllers dir where we will handle them, don't put middleware below or it won't fire
 
+
+
 sequelize.sync({ force: false }).then(() => { //establish sequelize connection to db
     app.listen(PORT, () => console.log('App listening on PORT: ' + PORT))
 }); //starts app listening for http request at specified port

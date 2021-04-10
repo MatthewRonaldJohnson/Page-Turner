@@ -1,5 +1,23 @@
-div class="card">
-    <div class="card-header">
-        <h4><a class="link" href="/dashboard/edit/{{id}}">{{title}}</a></h4>
+<a href="/post/{{id}}">
+    <div class="row my-5 p-2 border">
+
+        <div class="col-12 col-md-3">
+            <div>
+                <div><img src="{{book.cover_img_url}}" alt="{{book_title}}"></div>
+                {{#if rating}}
+                <span class="badge bg-success">👍 A Real Page Turner</span>
+                {{else}}
+                <span class="badge bg-danger">👎 Give it a Pass</span>
+                {{/if}}
+            </div>
+
+        </div>
+        <div class="d-flex flex-column justify-content-center align-items-center col-12 col-md-9">
+            <h4>{{title}}</h4>
+            <p>
+                {{body}}
+            </p>
+        </div>
+
     </div>
-</div>
+</a>
