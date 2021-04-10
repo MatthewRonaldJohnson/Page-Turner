@@ -26,8 +26,17 @@ User.init(
         len: [8],
       },
     },
-  },
-  {
+    // },
+    //   bio: {
+    //     type: Datatypes.TEXT, 
+    //     allowNull: false,
+    // },
+
+    // profile_pic :{
+      // type: DataTypes.STRING,
+      // allowNull: false,
+    // },
+  
     hooks: {
       beforeCreate: async (newUserData) => {
         newUserData.password = await bcrypt.hash(newUserData.password, 10);

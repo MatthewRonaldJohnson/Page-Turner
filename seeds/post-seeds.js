@@ -6,7 +6,7 @@ const postData = [
         book_isbn: 9780345339683,
         title: "A real page turner",
         rating: true, 
-        body: "THIS WAS JUST INCREDIBLE, I did not expect this book. It just created a tempest inside of me, made me feel such rage and power. And I just can't wait to read the second one.",
+        body: "There are some days when I actually think that the humble Hobbit is superior to it's bohemoth brother, The Lord of the Rings . It's a much tighter story, and Bilbo is a much more appeal character than is Frodo.",
         user_id: 1,
     },
     {
@@ -43,11 +43,11 @@ const postData = [
         user_id: 6, 
     },
     {
-        //perfect
+        //miss benson's beetles
         book_isbn: 9780812996715, 
         title: "High Hopes, but didn't pan out",
         rating: false, 
-        body: "Being a fan of Rachel Joyce's other work (The Unlikely Pilgrimage of Harold Fry & The Love Song of Queenie Hennessy), I had high hopes for this one. Unfortunately I was left feeling underwhelmed, which is a shame as the premise is a fascinating one: how life can turn on a sixpence within the blink of an eye; in this case within the space of two leap seconds, which were added to time in the year 1972.",
+        body: "While skimming some reviews once I was midway through Miss Benson’s Beetle, I saw several trigger warnings for animal abuse. ALERT, ALERT! Even though that would have made me pass entirely on the novel had I known it beforehand, I decided to keep going hoping it wasn’t too horrible.",
         user_id: 4, 
         
     },
