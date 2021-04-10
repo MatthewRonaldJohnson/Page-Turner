@@ -22,13 +22,13 @@ router.get('/:id', async (req, res) => {
     }
     userData.posts = posts;
     console.log(userData.posts)
-    res.render('profile', { userData })
+    res.render('profile', { userData, userId: req.session.userId})
 })
 
 router.get('/update/:id', async (req, res) => {
     const rawUserData = await User.findByPk(req.params.id);
     const userData = rawUserData.get();
-    res.render('update-profile', { userData })
+    res.render('update-profile', { userData, userId: req.session.userId})
 })
 
 router.use('*', cloudinaryConfig);
