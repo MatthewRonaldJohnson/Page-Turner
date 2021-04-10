@@ -132,4 +132,23 @@ router.get('/signup', (req, res) => {
     res.render('sign-up')
 })
 
+router.get('/bookSearch', (req,res) => {
+    res.render('bookSearch')
+})
+
+router.post('/addBook', async (req,res) => {
+    //check if book is in database, if not add it
+    const findBook = await Books.findByPk(req.body.isbn);
+    if(findBook) { //if book is already in database don't do anything else
+        res.end();
+        return;
+    }
+    const newBook = await Books.create(req.body)
+    res.end(newBook);
+})
+
+router.get('/newPost/:isbn', (req,res) => {
+    res.render('new-post', {isbn: req.params.isbn})
+})
+
 module.exports = router;

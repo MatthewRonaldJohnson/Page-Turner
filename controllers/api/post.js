@@ -5,7 +5,8 @@ const checkAuth = require('../../utils/checkAuth');
 router.post('/', checkAuth, async (req,res) => {
     //req.body needs to have
     //title, rating, body, book_isbn
-    req.body.user_id = req.session.userId;
+    // req.body.user_id = req.session.userId;
+    req.body.user_id = 1;
     const newPost = await Post.create(req.body);
     res.json(newPost);
 })
