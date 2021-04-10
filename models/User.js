@@ -1,4 +1,4 @@
-const { Model, DataTypes} = require("sequelize");
+const { Model, DataTypes } = require("sequelize");
 const bcrypt = require("bcrypt");
 const sequelize = require("../config/connection");
 
@@ -26,18 +26,13 @@ User.init(
         len: [8],
       },
     },
-  
-    //   bio: {
-    //     type: DataTypes.TEXT, 
-      
-    // },
-
-    profile_pic :{
+    profile_pic: {
       type: DataTypes.STRING,
-      defaultValue: "https://res.cloudinary.com/dh5xladkz/image/upload/v1618078037/Page-Turner/default-profile_bfibgv.png", 
+      defaultValue: "https://res.cloudinary.com/dh5xladkz/image/upload/v1618078037/Page-Turner/default-profile_bfibgv.png",
       allowNull: false,
     },
-  
+  },
+  {
     hooks: {
       beforeCreate: async (newUserData) => {
         newUserData.password = await bcrypt.hash(newUserData.password, 10);
