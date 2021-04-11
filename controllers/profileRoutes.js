@@ -4,7 +4,7 @@ const sequelize = require('../config/connection');
 
 const { resolve } = require('path');
 const { uploader, cloudinaryConfig } = require('../config/cloudinaryConfig')
-const { multerUploads, dataUri } = require('../utils/multer');
+const { multerUploads, fileP } = require('../utils/multer');
 
 router.get('/:id', async (req, res) => {
     const rawUserData = await User.findByPk(req.params.id, {
@@ -31,24 +31,23 @@ router.get('/update/:id', async (req, res) => {
     res.render('update-profile', { userData, userId: req.session.userId})
 })
 
-router.use('*', cloudinaryConfig);
-
-router.post('/imgUpload', multerUploads, (req, res) => {
+router.post('/imgUpload', cloudinaryConfig, multerUploads, (req, res) => {
     console.log(req.file);
-    res.end();
-    // if(req.file) {
-    //     const file = dataUri(req).content;
-    //     return uploader.upload(file).then((result) => {
-    //         const image = result.url;
-    //         return res.status(200).json({
-    //             message: "upload complete",
-    //             data: {image},
-    //         })
-    //     }).catch((error) => res.status(400).json({
-    //         message: 'failure',
-    //         data: {error}
-    //     }))
-    // }
+
+
+    if(req.file) {
+        const file = fileP(req).content;
+        return uploader.upload(file).then((result) => {
+            const image = result.url;
+            return res.status(200).json({
+                message: "upload complete",
+                data: {image},
+            })
+        }).catch((error) => res.status(400).json({
+            message: 'failure',
+            data: {error}
+        }))
+    }
 })
 
 module.exports = router;

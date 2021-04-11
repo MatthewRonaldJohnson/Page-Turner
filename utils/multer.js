@@ -1,12 +1,18 @@
 const multer = require('multer');
-const Datauri = require('datauri');
+const DatauriPaser = require("datauri/parser");
 const path = require('path');
 const storage = multer.memoryStorage();
 
 const multerUploads = multer({storage}).single('image');
 
-// const dUri = new Datauri();
+const parser = new DatauriPaser();
 
-// const dataUri = req => dUri.format(path.extname(req.file.originalname).toString(),req.file.buffer);
+/**
+ * this converts buffer to data url
+ * param obj, reqdcontaining field object
+ * returns string, data url from string buffer
+ */
 
-module.exports = {multerUploads};
+const fileP = req => parser.format(path.extname(req.file.originalname).toString(),req.file.buffer);
+
+module.exports = {multerUploads, fileP};
