@@ -22,7 +22,7 @@
         {{#if own}}
         {{postData.id}}
         <a href="/update/post/{{postData.id}}"> <button class="my-3 col-6 btn btn-dark">Update Post</button></a>
-        <button class="my-3 col-6 btn btn-danger">Delete Post</button>
+        <button id="delete" class="my-3 col-6 btn btn-danger">Delete Post</button>
         {{/if}}
     </div>
     {{#each postData.commentArr}}
@@ -45,5 +45,8 @@
 
 <script src= "/js/comment.js"></script>
 {{#if own}}
+<script>
+    const id={{postData.id}}
+</script>
 <script src='/js/deletePost.js'></script>
 {{/if}}
