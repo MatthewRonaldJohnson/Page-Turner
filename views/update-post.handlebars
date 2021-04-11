@@ -1,1 +1,39 @@
-{{postData.title}}
+{{postData.rating}}
+
+<div class="container">
+    <div class="row">
+        <h1>Update Review</h1>
+    </div>
+    <form id="updatePostForm">
+        <div class="row my-3">
+            <label for="title" class="col-1">Title:</label>
+            <input type="text" class="text col-11" id="title" value='{{postData.title}}'>
+        </div>
+        <div class="row my-3">
+            <label for="body" class="col-1">Body:</label>
+            <textarea id="body" class="col-11" rows="20">{{postData.body}}</textarea>
+        </div>
+        <div class="row my-3">
+            <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off" 
+            {{#if postData.rating}}
+                checked
+            {{/if}}>
+            <label class="btn btn-outline-success col-6" for="success-outlined">👍Page Turner</label>
+
+            <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off"
+            {{#unless postData.rating}}
+            checked
+            {{/unless}}
+            >
+            <label class="btn btn-outline-danger col-6" for="danger-outlined">👎give it pass</label>
+        </div>
+        <div class="row my-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const postId = {{postData.id}}
+</script>
+<script src="/js/updatePost.js"></script>
