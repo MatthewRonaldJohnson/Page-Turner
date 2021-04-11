@@ -29,19 +29,23 @@ User.init(
     profile_pic: {
       type: DataTypes.STRING,
       defaultValue: "https://res.cloudinary.com/dh5xladkz/image/upload/v1618078037/Page-Turner/default-profile_bfibgv.png",
-      
     },
+    bio: {
+      type: DataTypes.TEXT
+    }
   },
   {
     hooks: {
       beforeCreate: async (newUserData) => {
+        console.log('hit==========================================================================================================================')
         newUserData.password = await bcrypt.hash(newUserData.password, 10);
         return newUserData;
       },
       beforeUpdate: async (newUserData) => {
+        console.log('hit==========================================================================================================================')
         newUserData.password = await bcrypt.hash(newUserData.password, 10);
         return newUserData;
-      },
+      }
     },
     sequelize,
     timestamps: false,
@@ -52,6 +56,3 @@ User.init(
 );
 
 module.exports = User;
-
-//bio?
-//profile pic?

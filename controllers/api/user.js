@@ -73,14 +73,24 @@ router.post('/logout', (req, res) => {
     }
 });
 
-router.put('/:id', checkAuth, async (req, res) => {
-    const updatedUserData = await User.update(req.body, { where: { id: req.params.id } })
-    res.json(updatedUserData)
-  })
-  
-  router.delete('/:id', checkAuth, async (req, res) => {
-    const deletedUser = await User.destroy({ where: { id: req.params.id } })
-    res.json(deletedUser)
-  })
+router.put('/', checkAuth, async (req, res) => {
+    try {
+        const updatedUserData = await User.update(req.body, {
+            where: {
+                id: req.session.userId,
+            }
+        })
+        res.json(updatedUserData)
+    } catch (err) {
+        console.log('tttttttttttttttttttttttt\n',err.errors[0].message,'\n ttttttttttttttttttttttttttt');
+        res.status(500).json(err.errors[0].message)
+    }
+
+})
+
+//   router.delete('/:id', checkAuth, async (req, res) => {
+//     const deletedUser = await User.destroy({ where: { id: req.params.id } })
+//     res.json(deletedUser)
+//   })
 
 module.exports = router;

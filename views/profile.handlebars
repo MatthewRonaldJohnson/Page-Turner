@@ -2,15 +2,18 @@
     <div class="row">
         <div class="col-12 col-md-3">
             <div class="d-flex flex-column text-center">
-                <div>
-                    <img src="https://res.cloudinary.com/dh5xladkz/image/upload/v1618078037/Page-Turner/default-profile_bfibgv.png" alt="Profile Picture for {{userData.username}}">
+                <div class="card">
+                    <img src="{{userData.profile_pic}}" alt="Profile Picture for {{userData.username}}">
                 </div>
                 <div>
                     <h2>{{userData.username}}</h2>
                 </div>
+                {{#if owner}}
                 <div>
-                    <a href='/profile/update/{{userData.id}}'><button class="btn btn-primary">Update Profile</button></a>
+                    <a href='/profile/update/{{userData.id}}'><button class="btn btn-primary">Update
+                            Profile</button></a>
                 </div>
+                {{/if}}
             </div>
         </div>
         <div class="col-12 col-md-7">

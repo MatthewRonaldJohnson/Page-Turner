@@ -143,7 +143,7 @@ router.post('/addBook',checkAuth, async (req,res) => {
         return;
     }
     const newBook = await Books.create(req.body)
-    res.end(newBook);
+    res.json(newBook);
 })
 
 router.get('/newPost/:isbn', checkAuth, (req,res) => {

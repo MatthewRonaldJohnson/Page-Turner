@@ -21,32 +21,37 @@ router.get('/:id', async (req, res) => {
         posts.push(JSON.parse(JSON.stringify(userData.posts[i])))
     }
     userData.posts = posts;
-    console.log(userData.posts)
-    res.render('profile', { userData, userId: req.session.userId})
+    const owner = req.session.userId == req.params.id ? true: false;
+    res.render('profile', { userData, userId: req.session.userId, owner })
 })
 
 router.get('/update/:id', async (req, res) => {
     const rawUserData = await User.findByPk(req.params.id);
     const userData = rawUserData.get();
-    res.render('update-profile', { userData, userId: req.session.userId})
+    res.render('update-profile', { userData, userId: req.session.userId })
 })
 
-router.post('/imgUpload', cloudinaryConfig, multerUploads, (req, res) => {
-    console.log(req.file);
-
-
-    if(req.file) {
+router.post('/imgUpload', cloudinaryConfig, multerUploads, async (req, res) => {
+    try {
+        if (!req.file) {
+            res.status(400).redirect('/profile/update/' + req.session.userId)
+        }
         const file = fileP(req).content;
-        return uploader.upload(file).then((result) => {
-            const image = result.url;
-            return res.status(200).json({
-                message: "upload complete",
-                data: {image},
+        const result = await uploader.upload(file)
+        const image = result.url;
+        await User.update(
+            {
+                profile_pic: image,
+            },
+            {
+                where: {
+                    id: req.session.userId,
+                }
             })
-        }).catch((error) => res.status(400).json({
-            message: 'failure',
-            data: {error}
-        }))
+        res.status(200).redirect('/profile/update/' + req.session.userId)
+    } catch (error) {
+        console.log(error)
+        res.status(500).redirect('/profile/' + req.session.userId)
     }
 })
 
