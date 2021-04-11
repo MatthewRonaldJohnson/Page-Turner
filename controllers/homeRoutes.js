@@ -95,7 +95,6 @@ router.get('/post/:id',checkAuth, async (req, res) => {
         res.render('single-post', {postData, userId: req.session.userId});
         //res.json(postData)
     } catch (error) {
-        console.log(error)
         res.redirect('/404')
     }
 })
@@ -143,7 +142,7 @@ router.post('/addBook',checkAuth, async (req,res) => {
         return;
     }
     const newBook = await Books.create(req.body)
-    res.end(newBook);
+    res.json(newBook);
 })
 
 router.get('/newPost/:isbn', checkAuth, (req,res) => {

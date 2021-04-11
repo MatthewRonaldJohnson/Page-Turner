@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     }
     catch (err) {
         //if user cant log in, display this message to them explaining why
-        res.status(400).json({ message: err.message })
+        res.status(400).json(err.errors[0].message)
     }
 });
 
@@ -38,7 +38,6 @@ router.post('/login', async (req, res) => {
                 .json({ message: "Couldn't find user, check your Username or Sign Up" });
             return;
         }
-        console.log(req.body)
         const validPassword = await dbUserData.checkPassword(req.body.password);
 
         if (!validPassword) {
@@ -56,7 +55,6 @@ router.post('/login', async (req, res) => {
                 .json({ user: dbUserData, message: 'You are now logged in!' });
         });
     } catch (err) {
-        console.log(err);
         res.status(500).json(err);
 
     }
@@ -73,14 +71,23 @@ router.post('/logout', (req, res) => {
     }
 });
 
-router.put('/:id', checkAuth, async (req, res) => {
-    const updatedUserData = await User.update(req.body, { where: { id: req.params.id } })
-    res.json(updatedUserData)
-  })
-  
-  router.delete('/:id', checkAuth, async (req, res) => {
-    const deletedUser = await User.destroy({ where: { id: req.params.id } })
-    res.json(deletedUser)
-  })
+router.put('/', checkAuth, async (req, res) => {
+    try {
+        const updatedUserData = await User.update(req.body, {
+            where: {
+                id: req.session.userId,
+            }
+        })
+        res.json(updatedUserData)
+    } catch (err) {
+        res.status(500).json(err.errors[0].message)
+    }
+
+})
+
+//   router.delete('/:id', checkAuth, async (req, res) => {
+//     const deletedUser = await User.destroy({ where: { id: req.params.id } })
+//     res.json(deletedUser)
+//   })
 
 module.exports = router;

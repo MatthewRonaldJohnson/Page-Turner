@@ -1,6 +1,57 @@
-{{userData.username}}
+<div class="container mt-5">
+  <div class="row my-5">
+    <div class="col-12 col-md-3">
+      <div class="card">
+        <img src="{{userData.profile_pic}}" alt="Profile Pic">
+      </div>
+    </div>
+    <div class="col-9 d-flex justify-content-center align-items-center">
+      <form action='/profile/imgUpload' method="post" enctype="multipart/form-data">
+        <h3>Upload a Profile Picture</h3>
+        <input type='file' name='image' />
+        <button class="btn btn-dark" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
 
-<form action='/profile/imgUpload' method="post" enctype="multipart/form-data">
-  <input type='file' name='image' />
-  <button type="submit">Submit</button>
-</form>
+  <div class="row my-5 text-center">
+    <h3>Update Bio</h3>
+    <form id='bioForm' class="w-100">
+      <textarea id="bio" class='w-100' rows="5">
+      {{userData.bio}}
+      </textarea>
+      <button class="btn btn-dark" type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div class="row my-5 text-center">
+    <h3>Update Username</h3>
+    <form id='usernameForm' class="w-100">
+      <p>Current Username: {{userData.username}}</p>
+      <label for="newUser">New Username:</label>
+      <input type="text" id="newUser">
+      <button class="btn btn-dark" type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div class="row my-5 text-center">
+    <h3>Update Password</h3>
+    <form id='passwordForm' class="d-flex flex-column justify-content-center align-items-center">
+      <div class="w-50 my-2">
+        <label for="newPassword">New Password:</label>
+        <input class="w-100" type="password" id="newPassword">
+      </div>
+      <div class="w-50 my-2">
+        <label for="reNewPassword">Re-enter New Password:</label>
+        <input class="w-100" type="password" id="reNewPassword">
+      </div>
+      <div>
+        <button class="btn btn-dark" type="submit">Submit</button>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+
+<script src="/js/updateProfile.js"></script>

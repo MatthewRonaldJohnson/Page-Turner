@@ -24,9 +24,6 @@ form.addEventListener('submit',  async function(e){
         },
         body: JSON.stringify(newPost)
     })
-
-    console.log(response);
-    console.log('=====')
     const {id} = await response.json()
 
     location = `/post/${id}`
