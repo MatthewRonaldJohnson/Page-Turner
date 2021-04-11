@@ -3,8 +3,8 @@
 
         <div class="col-12 col-md-3">
             <div>
-                <div><img src="{{cover_img_url}}" alt="{{book_title}}"></div>
-                {{#if rating}}
+                <div><img src="{{postData.cover_img_url}}" alt="{{postData.book_title}}"></div>
+                {{#if postData.rating}}
                 <span class="badge bg-success">👍 A Real Page Turner</span>
                 {{else}}
                 <span class="badge bg-danger">👎 Give it a Pass</span>
@@ -13,15 +13,15 @@
 
         </div>
         <div class="d-flex flex-column justify-content-center align-items-center col-12 col-md-9">
-            <h4>{{title}}</h4>
+            <h4>{{postData.title}}</h4>
             <p>
-                {{body}}
+                {{postData.body}}
             </p>
-            <p>- {{userName}}</p>
+            <p>- {{postData.userName}}</p>
         </div>
 
     </div>
-    {{#each commentArr}}
+    {{#each postData.commentArr}}
     {{> comments}}
     {{/each}}
 </div>
