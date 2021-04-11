@@ -52,7 +52,6 @@ const makeNewPost = async function(e){
         }),
         headers: { 'Content-Type': 'application/json' },
       });
-    console.log(response)
     if(response.ok){
         location = `/newPost/${e.target.dataset.isbn}`
     }

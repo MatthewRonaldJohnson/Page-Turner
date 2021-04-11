@@ -14,7 +14,6 @@ const updateUser = async function(body){
         location = location;
     } else{
         const message = await response.json()
-        console.log(message)
         alert('Unable to update user.\n Message: '+ message)
     }
 }

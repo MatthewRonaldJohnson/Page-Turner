@@ -95,7 +95,6 @@ router.get('/post/:id',checkAuth, async (req, res) => {
         res.render('single-post', {postData, userId: req.session.userId});
         //res.json(postData)
     } catch (error) {
-        console.log(error)
         res.redirect('/404')
     }
 })

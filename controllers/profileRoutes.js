@@ -50,7 +50,6 @@ router.post('/imgUpload', cloudinaryConfig, multerUploads, async (req, res) => {
             })
         res.status(200).redirect('/profile/update/' + req.session.userId)
     } catch (error) {
-        console.log(error)
         res.status(500).redirect('/profile/' + req.session.userId)
     }
 })

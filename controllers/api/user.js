@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     }
     catch (err) {
         //if user cant log in, display this message to them explaining why
-        res.status(400).json({ message: err.message })
+        res.status(400).json(err.errors[0].message)
     }
 });
 
@@ -38,7 +38,6 @@ router.post('/login', async (req, res) => {
                 .json({ message: "Couldn't find user, check your Username or Sign Up" });
             return;
         }
-        console.log(req.body)
         const validPassword = await dbUserData.checkPassword(req.body.password);
 
         if (!validPassword) {
@@ -56,7 +55,6 @@ router.post('/login', async (req, res) => {
                 .json({ user: dbUserData, message: 'You are now logged in!' });
         });
     } catch (err) {
-        console.log(err);
         res.status(500).json(err);
 
     }
@@ -82,7 +80,6 @@ router.put('/', checkAuth, async (req, res) => {
         })
         res.json(updatedUserData)
     } catch (err) {
-        console.log('tttttttttttttttttttttttt\n',err.errors[0].message,'\n ttttttttttttttttttttttttttt');
         res.status(500).json(err.errors[0].message)
     }
 
