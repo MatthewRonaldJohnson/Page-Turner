@@ -101,7 +101,7 @@ router.get('/post/:id', checkAuth, async (req, res) => {
     }
 })
 
-router.get('update/post/:id', checkAuth, async (req, res) => {
+router.get('/update/post/:id', checkAuth, async (req, res) => {
     console.log('=======================hit=======================')
     const rawPost = await Post.findByPk(req.params.id, {
         include: [{

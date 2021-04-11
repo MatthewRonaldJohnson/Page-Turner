@@ -20,8 +20,7 @@
             <p>- {{postData.userName}}</p>
         </div>
         {{#if own}}
-        {{postData.id}}
-        <a href="/update/post/{{postData.id}}"> <button class="my-3 col-6 btn btn-dark">Update Post</button></a>
+        <button id="update" class="my-3 col-6 btn btn-dark">Update Post</button>
         <button id="delete" class="my-3 col-6 btn btn-danger">Delete Post</button>
         {{/if}}
     </div>

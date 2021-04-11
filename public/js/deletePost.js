@@ -1,5 +1,9 @@
 const deleteButton = document.getElementById("delete")
+const updateButton = document.getElementById('update')
 
+updateButton.addEventListener('click', function(){
+    location = '/update/post/'+id
+})
 
 
 deleteButton.addEventListener("click",async function(){
