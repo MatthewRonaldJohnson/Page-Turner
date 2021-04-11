@@ -28,23 +28,23 @@ router.get('/', async (req, res) => {
         postData[i].book_title = book.title;
     }
     //render homepage
-    res.render('homepage', { postData, userId: req.session.userId})
+    res.render('homepage', { postData, userId: req.session.userId })
     //res.json(postData)
 })
 
 // /members, shows member cards 
-router.get('/members',checkAuth, async (req, res) => {
+router.get('/members', checkAuth, async (req, res) => {
     //get user data
     const rawUserData = await User.findAll()
     //serialize it
     const userData = rawUserData.map(user => user.get())
     //render members page
-    res.render('members', {userData, userId: req.session.userId})
+    res.render('members', { userData, userId: req.session.userId })
     //res.json(userData)
 })
 
 // /search/:search-term, search bar, returns list of results frm google books api, and checks if we have reviews for those books
-router.get('/search/:searchTerm',checkAuth, async (req, res) => {
+router.get('/search/:searchTerm', checkAuth, async (req, res) => {
     const url = `https://www.googleapis.com/books/v1/volumes?q=${req.params.searchTerm}`
     //search google books api
     const response = await fetch(url);
@@ -65,10 +65,11 @@ router.get('/search/:searchTerm',checkAuth, async (req, res) => {
     //serialize data 
     const books = booksInDb.map(book => book.get())
     //render search page
-    res.render('searchResults', {books, userId: req.session.userId})
+    res.render('searchResults', { books, userId: req.session.userId })
 })
 
-router.get('/post/:id',checkAuth, async (req, res) => {
+router.get('/post/:id', checkAuth, async (req, res) => {
+    
     try {//find the specificed post and all associated data
         const rawPost = await Post.findByPk(req.params.id, {
             include: [{
@@ -91,15 +92,35 @@ router.get('/post/:id',checkAuth, async (req, res) => {
         postData.book_title = book.title;
         const commentArr = postData.comments.map(comment => JSON.parse(JSON.stringify(comment)))
         postData.commentArr = commentArr;
+        const own = req.session.userId === user.id;
         //render page
-        res.render('single-post', {postData, userId: req.session.userId});
+        res.render('single-post', { postData, userId: req.session.userId, own });
         //res.json(postData)
     } catch (error) {
         res.redirect('/404')
     }
 })
 
-router.get('/book/:isbn',checkAuth, async (req, res) => {
+router.get('update/post/:id', checkAuth, async (req, res) => {
+    console.log('=======================hit=======================')
+    const rawPost = await Post.findByPk(req.params.id, {
+        include: [{
+            model: User,
+            attributes: ['id', 'username']
+        },
+        { model: Books }]
+    })
+    const postData = rawPost.get();
+    const user = JSON.parse(JSON.stringify(postData.User));
+    postData.userName = user.username;
+    const book = JSON.parse(JSON.stringify(postData.book));
+    postData.cover_img_url = book.cover_img_url;
+    postData.book_title = book.title;
+    res.render('update-post', { postData, userId: req.session.userId})
+
+})
+
+router.get('/book/:isbn', checkAuth, async (req, res) => {
     try {
         //find book, any reviews for it (and their authors)
         const rawBook = await Books.findByPk(req.params.isbn, {
@@ -115,7 +136,7 @@ router.get('/book/:isbn',checkAuth, async (req, res) => {
         //serialize data
         const bookData = rawBook.get();
         //render page
-        res.render('booksinDatabase', {bookData, userId: req.session.userId})
+        res.render('booksinDatabase', { bookData, userId: req.session.userId })
         //res.json(bookData)
     } catch (error) {
         res.redirect('/404')
@@ -123,21 +144,21 @@ router.get('/book/:isbn',checkAuth, async (req, res) => {
 })
 
 router.get('/login', (req, res) => {
-    res.render('login', {userId: req.session.userId})
+    res.render('login', { userId: req.session.userId })
 })
 
 router.get('/signup', (req, res) => {
-    res.render('sign-up', {userId: req.session.userId})
+    res.render('sign-up', { userId: req.session.userId })
 })
 
-router.get('/bookSearch',checkAuth, (req,res) => {
-    res.render('bookSearch', {userId: req.session.userId})
+router.get('/bookSearch', checkAuth, (req, res) => {
+    res.render('bookSearch', { userId: req.session.userId })
 })
 
-router.post('/addBook',checkAuth, async (req,res) => {
+router.post('/addBook', checkAuth, async (req, res) => {
     //check if book is in database, if not add it
     const findBook = await Books.findByPk(req.body.isbn);
-    if(findBook) { //if book is already in database don't do anything else
+    if (findBook) { //if book is already in database don't do anything else
         res.end();
         return;
     }
@@ -145,8 +166,8 @@ router.post('/addBook',checkAuth, async (req,res) => {
     res.json(newBook);
 })
 
-router.get('/newPost/:isbn', checkAuth, (req,res) => {
-    res.render('new-post', {isbn: req.params.isbn, userId: req.session.userId})
+router.get('/newPost/:isbn', checkAuth, (req, res) => {
+    res.render('new-post', { isbn: req.params.isbn, userId: req.session.userId })
 })
 
 module.exports = router;

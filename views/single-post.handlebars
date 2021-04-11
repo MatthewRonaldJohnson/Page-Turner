@@ -19,7 +19,11 @@
             </p>
             <p>- {{postData.userName}}</p>
         </div>
-
+        {{#if own}}
+        {{postData.id}}
+        <a href="/update/post/{{postData.id}}"> <button class="my-3 col-6 btn btn-dark">Update Post</button></a>
+        <button class="my-3 col-6 btn btn-danger">Delete Post</button>
+        {{/if}}
     </div>
     {{#each postData.commentArr}}
     {{> comments}} 
@@ -40,3 +44,6 @@
 </div>
 
 <script src= "/js/comment.js"></script>
+{{#if own}}
+<script src='/js/deletePost.js'></script>
+{{/if}}
