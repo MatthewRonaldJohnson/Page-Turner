@@ -76,7 +76,8 @@ router.put('/', checkAuth, async (req, res) => {
         const updatedUserData = await User.update(req.body, {
             where: {
                 id: req.session.userId,
-            }
+            },
+            individualHooks : true,
         })
         res.json(updatedUserData)
     } catch (err) {
