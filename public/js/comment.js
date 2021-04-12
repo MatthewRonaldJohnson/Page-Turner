@@ -13,7 +13,7 @@ addButton.hidden = false
 form.hidden= true
 
 const comment = document.getElementById("comment").value
-const post_id = window.location.href.charAt(window.location.href.length-1)
+const post_id = id;
  await fetch ('/api/comment', { 
      method: "POST",
      headers: {
